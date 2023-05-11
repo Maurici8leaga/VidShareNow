@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -r tsconfig-paths/register src/app.ts",
+    "dev": "nodemon -r tsconfig-paths/register src/app.ts | ./node_modules/.bin/bunyan",
     "lint:check": "eslint . --ext .ts",
     "lint:fix": "npx eslint --fix .",
     "prettier:check": "prettier --check src/**/*.ts",
-    "prettier:fix": "prettier --write src/**/*.ts"
+    "prettier:fix": "prettier --write src/**/*.ts",
+    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json"
   },
   "keywords": [],
   "author": "",
@@ -54,7 +55,6 @@
     "ts-node": "10.9.1",
     "tsc-alias": "1.8.3",
     "tsconfig-paths": "4.1.2",
-    "ttypescript": "1.5.15",
     "typescript": "4.9.5",
     "typescript-transform-paths": "3.4.6"
   }
