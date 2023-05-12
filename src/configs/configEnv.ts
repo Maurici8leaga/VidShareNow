@@ -10,6 +10,7 @@ class Config {
   // creamos las propiedad publicas porque queremos poder acceder a ellas en otros lugares
   public CLIENT_URL: string | undefined;
   public SERVER_PORT: string | undefined;
+  public DATABASE_URL: string | undefined;
 
   // inicializando las variables
   constructor() {
@@ -17,6 +18,7 @@ class Config {
     // "process.env" es la que permite poder apuntar a esta variable
     this.CLIENT_URL = process.env.CLIENT_URL;
     this.SERVER_PORT = process.env.SERVER_PORT;
+    this.DATABASE_URL = process.env.DATABASE_URL;
   }
 
   // se crea un metodo publico para validar que estas variables de entorno no esten vacias
