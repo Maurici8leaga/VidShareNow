@@ -27,6 +27,9 @@
       //aqui van los alias que llevaran las rutas
       "@bootstrap/*": ["src/bootstrap/*"], // los nombres van a depender de cada carpeta no son estrictos
       "@configs/*": ["src/configs/*"], //debe ir obligatorio el /* ya que especifica que todo que venga despues usara ese alias
+      "@user/*": ["src/features/user/*"],
+      "@video/*": ["src/features/video/*"],
+      "@comment/*": ["src/features/comment/*"],
       "@interfaces/*": ["src/interfaces/*"],
       "@decorators/*": ["src/shared/decorators/*"],
       "@helpers/*": ["src/shared/helpers/*"],

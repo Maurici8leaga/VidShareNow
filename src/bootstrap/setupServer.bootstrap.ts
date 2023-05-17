@@ -10,8 +10,15 @@ import helmet from 'helmet';
 // para seguridad al server cuando la data navega por internet
 import cors from 'cors';
 // "cors" para comunicacion de dominios
+import compression from 'compression';
+// para comprimir a lo mas minimo la info que va y llega del server
+import HTTP_STATUS from 'http-status-codes';
+// para usar los status code en los errors
 import { config } from '@configs/configEnv';
 import { logger } from '@configs/configLogs';
+import { IErrorResponse } from '@helpers/errors/errorResponse.interface';
+import { CustomError } from '@helpers/errors/customError';
+import applicationRoutes from '@interfaces/http/routes';
 
 //creamos el logger para los logs de este class
 const log: Logger = logger.createLogger('Server');
@@ -30,6 +37,9 @@ export class VidShareNowServer {
     // al arrancar seran ejecutados estos metodos privados que manejan los middleware
     // aqui se aplica el patron chains of responsability
     this.securityMiddleware(this.app);
+    this.standarmiddleware(this.app);
+    this.routesMiddleware(this.app);
+    this.globalErrorHandler(this.app);
     this.startServer(this.app);
   }
 
@@ -56,6 +66,50 @@ export class VidShareNowServer {
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'] // metodos explicitos que se van a utilizar
       })
     );
+  }
+
+  // metodo privado para los estandares de los middlewares
+  private standarmiddleware(app: Application): void {
+    app.use(compression()); //"compression" para comprimir la data
+    app.use(json({ limit: '50mb' })); //se le pasa como parametro adicional el peso maximo que debe tener estos archivos
+    // se usa "json()" para parsear el contenido del server ya que ya no se usa "bodyParser.json()"
+    app.use(urlencoded({ extended: true, limit: '50mb' }));
+    // el "urlencoded" asegura que el formato venga  en el que se indico en este caso tipo "json"
+    // el parametro "extended" encripta la data que venga en el archivo
+    // y como 2do parametro se le pasa "limit" para que el peso del archivo no supere del indicado
+    // el "urlencoded" asegura que el formato venga  en el que se indico en este caso tipo "json"
+    // el parametro "extended" encripta la data que venga en el archivo
+    // y como 2do parametro se le pasa "limit" para que el peso del archivo no supere del indicado
+  }
+
+  // metodo privado para las exponer las rutas y que se puedan acceder apenas arranque el server
+  private routesMiddleware(app: Application): void {
+    applicationRoutes(app);
+  }
+
+  // metodo privado para manejor de los errores globales
+  private globalErrorHandler(app: Application) {
+    // este middleware es para las rutas que no existan
+    app.all('*', (req: Request, res: Response) => {
+      // app.all("*") para todas las rutas en express el * tomará todas las definiciones a partir de las rutas que existentes cuando definas tus rutas de la app.. entonces a partir de las creadas, tomará las que no esten
+      res.status(HTTP_STATUS.NOT_FOUND).json({ message: `${req.originalUrl} not found` });
+      // esto mandara con un status 404 y un mensaaje con la ruta a la que se esta tratando de acceder diciendo not found
+    });
+
+    // este middleware es para las rutas que si existan
+    app.use((error: IErrorResponse, _req: Request, res: Response, next: NextFunction) => {
+      // el "_" del req se coloca ya que es un parametro que debe ir pero no es usado
+      // aqui se usa la interfaz "IErrorResponse" para el manejo del mensaje del error
+
+      log.error(error); // se coloca un log para tener la trazabilidad del error
+      if (error instanceof CustomError) {
+        // se usa el "instanceof" para verificar que si el error es de clase "CustomError" entonces haga..
+
+        return res.status(error.statusCode).json(error.serializeErrors());
+        // se va a enviar el status code con un json de estructura del "serializeErrors"
+      }
+      next(); // se llama next para que si termino el proceso salte a otro proceso
+    });
   }
 
   // metodo de arranque asincrono del servidor de node
