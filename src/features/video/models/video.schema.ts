@@ -17,7 +17,7 @@ const videoSchema: Schema = new Schema({
   category: { type: String, default: '' }
 });
 
-// VideoSchemaVideoSchema sera el nombre de este Schema el cual sera de tipo IVideoDocument
+// VideoSchema sera el nombre de este Schema el cual sera de tipo IVideoDocument
 const VideoSchema: Model<IVideoDocument> = model<IVideoDocument>('Video', videoSchema, 'Video');
 // el 1er parametro es el nombre de referencia que tendra en la colleccion de mongoose
 // 2do parametro es el Schema
