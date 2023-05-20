@@ -14,6 +14,7 @@ class Config {
   public SECRET_KEY_ONE: string | undefined;
   public SECRET_KEY_TWO: string | undefined;
   public SALT_ROUND: string | undefined;
+  public JWT_TOKEN: string | undefined;
 
   // inicializando las variables
   constructor() {
@@ -25,6 +26,7 @@ class Config {
     this.SECRET_KEY_ONE = process.env.SECRET_KEY_ONE;
     this.SECRET_KEY_TWO = process.env.SECRET_KEY_TWO;
     this.SALT_ROUND = process.env.SALT_ROUND;
+    this.JWT_TOKEN = process.env.JWT_TOKEN;
   }
 
   // se crea un metodo publico para validar que estas variables de entorno no esten vacias
