@@ -13,7 +13,8 @@ export interface IVideoDocument extends Document {
   title: string;
   description: string;
   link: string;
-  likes: number;
+  likes: mongoose.Types.ObjectId[];
   category: string;
+  username?: string;
   createdAt?: Date;
 }

@@ -13,7 +13,7 @@ const videoSchema: Schema = new Schema({
   title: { type: String, default: '' }, //es buena practica colocar sus valores por default
   description: { type: String, default: '' },
   link: { type: String, default: '' },
-  likes: { type: Number, default: 0 },
+  likes: [{ type: mongoose.Schema.Types.ObjectId, red: 'User' }],
   category: { type: String, default: '' }
 });
 
