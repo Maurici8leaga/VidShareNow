@@ -21,6 +21,8 @@ class CommentService {
   public async editComment(idAuthor: string, newText: string): Promise<void> {
     await CommentSchema.updateOne({ _id: idAuthor }, { $set: { text: newText } }); //lo encontrara por el idAuthor
     //updateOne es un metodo de consulta de mongoose para actualizar un campo , el 1er argumento es el cual buscara, y el 2do argumento sera el que actualizara
+    // el $set es un operador de mongo el cual sirve para actualizar el parametro seleccionado
+    // el "updateOne" puede actualizar con y sin el operaador $set
   }
 }
 
