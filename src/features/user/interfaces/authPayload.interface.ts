@@ -15,8 +15,8 @@ declare global {
 
 // se crea la interfaz con la estructura que tendra el parametro dentro de la interfaz global de express (SOLID Interface Segregation)
 export interface AuthPayload {
+  userId: string;
   username: string;
   email: string;
-  password: string;
   iat?: number; //es una palabra estandar que hace referencia al tiempo de expiracion del  token
 }

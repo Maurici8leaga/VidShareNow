@@ -37,7 +37,7 @@ export class Signin {
       // la funcion "sign" es para asignar un token, el cual espera 2 argumentos, 1ro la data del auth del user
       // 2do es un token secreto el cual esta en las variables de entorno
       {
-        _id: userInExistence._id,
+        userId: userInExistence._id,
         username: userInExistence.username,
         email: userInExistence.email
       },
