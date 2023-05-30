@@ -40,6 +40,18 @@ class VideoService {
     return user;
   }
 
+  // search a video by its id
+  public async getVideoById(idVideo: string): Promise<IVideoDocument> {
+    const video: IVideoDocument = (await VideoSchema.findById({ idVideo }).populate([
+      // se debe popular el author y likes ya que estas son conexiones con otra coleccion
+      { path: 'author', select: 'username' },
+      // dentro de select van los parametros que queremos obtener de la otra coleccion cuando haga populate y las que no esten seran ignoradas
+      { path: 'likes', select: 'username' }
+    ])) as IVideoDocument;
+
+    return video;
+  }
+
   // get all videos in the collections
   public async getAllVideos(): Promise<IVideoDocument> {
     const user: IVideoDocument = (await VideoSchema.find().populate([

@@ -9,6 +9,18 @@ class CommentService {
     // el metodo "create" es de mongoose,  el permite crear un documento en la DB
   }
 
+  // find comment
+  public async searchCommentById(commentId: string): Promise<ICommentDocument> {
+    const comment: ICommentDocument = (await CommentSchema.findById({ commentId }).populate([
+      { path: 'idAuthor', select: '_id username' },
+      { path: 'idVideo', select: 'author title description link likes category' }
+    ])) as ICommentDocument;
+    //OJO SE DEBE TIPAR ACA LA ESTRUCTURA DE LO QUE VA A DEVOLVER ESTO PARA QUE DONDE SEA IMPLEMENTADO NO TENGA QUE TIPARSE OBLIGATORIAMENTE
+    // SE DEBE TIPAR SIEMPRE ENTRADAS Y SALIDAS DE FUNCIONES QUE DEVUELVAN DATOS
+
+    return comment; //EN ESTE CASO DEVUELVE UN COMENTARIO
+  }
+
   // delete a comment
   public async deleteComment(commentId: string): Promise<void> {
     // se busca primero el id del comentario
@@ -18,11 +30,18 @@ class CommentService {
   }
 
   // edit the text of a comment
-  public async editComment(idAuthor: string, newText: string): Promise<void> {
-    await CommentSchema.updateOne({ _id: idAuthor }, { $set: { text: newText } }); //lo encontrara por el idAuthor
+  public async editComment(idAuthor: string, newText: string): Promise<ICommentDocument> {
+    const comment: ICommentDocument = (await CommentSchema.updateOne(
+      { _id: idAuthor },
+      { $set: { text: newText } }
+    )) as unknown as ICommentDocument;
+    //OJO SE DEBE TIPAR ACA LA ESTRUCTURA DE LO QUE VA A DEVOLVER ESTO PARA QUE DONDE SEA IMPLEMENTADO NO TENGA QUE TIPARSE OBLIGATORIAMENTE
+    //lo encontrara por el idAuthor
     //updateOne es un metodo de consulta de mongoose para actualizar un campo , el 1er argumento es el cual buscara, y el 2do argumento sera el que actualizara
     // el $set es un operador de mongo el cual sirve para actualizar el parametro seleccionado
     // el "updateOne" puede actualizar con y sin el operaador $set
+
+    return comment;
   }
 }
 

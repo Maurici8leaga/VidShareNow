@@ -36,7 +36,7 @@ export class Video extends VideoUtility {
     });
 
     // request a la db para crear el video
-    const videoCreated = await videoService.createVideo(videoData);
+    const videoCreated = (await videoService.createVideo(videoData)) as unknown as IVideoDocument;
 
     res.status(HTTP_STATUS.CREATED).json({ message: 'Video created successfully', video: videoCreated });
   }
@@ -46,10 +46,10 @@ export class Video extends VideoUtility {
     // dudas si esta bien este type  de IVideoDocument ya que esta respuesta traera un array de todos los videos
     const videoList: IVideoDocument = await videoService.getAllVideos();
 
-    // PREGUNTAR COMO HACER PARA CUANDO NO EXISTA NINGUN VIDEO EN LA DB
-    // res
-    //   .status(HTTP_STATUS.OK)
-    //   .json({ message: 'Successful request', videoArray: videoList.length > 0 ? videoArray : [] });
+    if (!videoList) {
+      // verificar como responde el server con este caso
+      res.status(HTTP_STATUS.NOT_FOUND).json({ message: 'There are not videos yet', videoArray: [] });
+    }
 
     res.status(HTTP_STATUS.OK).json({ message: 'Successful request', videoArray: videoList });
   }
