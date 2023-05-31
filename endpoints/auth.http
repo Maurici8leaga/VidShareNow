@@ -1,0 +1,32 @@
+@baseUrl = http://localhost:5001
+
+@urlPath = api/v1
+
+###
+POST {{baseUrl}}/{{urlPath}}/signup
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "username": "mau8795",
+  "email": "mauricio@gmail.com",
+  "password": "123456"
+}
+
+###
+POST {{baseUrl}}/{{urlPath}}/signin
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "username": "mau8795",
+  "password": "123456"
+}
+
+###
+GET {{baseUrl}}/{{urlPath}}/signout
+Content-Type: application/json
+Accept: application/json
+withCredentials: true

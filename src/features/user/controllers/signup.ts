@@ -45,6 +45,8 @@ export class Signup extends SignupUtility {
       password: passwordHashed
     });
 
+    await userService.createUser(userData);
+
     //  asignacion del token al user
     const userToken: string = Signup.prototype.assignToken(userData, userObjectId);
     // se llama el metodo creado en el file signup.utility "signToken"
