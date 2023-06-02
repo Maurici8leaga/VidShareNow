@@ -51,8 +51,8 @@ export class VidShareNowServer {
         //middleware para los cookies
         name: 'session', //el nombre que va a tener de referencia la cookie
         keys: [config.SECRET_KEY_ONE!, config.SECRET_KEY_TWO!], // es donde van las credenciales de lasa cookies, se coloca el signo ! para el required
-        maxAge: 2 * 24 * 60 * 60 * 1000, // se coloca un calculo de dias, semanas,  horas de cuanto va a durar la cookie, en este caso 2 dias
-        secure: config.NODE_ENV !== 'develoment' //es donde se especifica el contexto en el que se va trabajar
+        maxAge: 24 * 7 * 3600000, // se coloca un calculo de dias, semanas,  horas de cuanto va a durar la cookie, en este caso 2 dias
+        secure: config.NODE_ENV !== 'development' //es donde se especifica el contexto en el que se va trabajar
       })
     );
 

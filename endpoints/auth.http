@@ -30,3 +30,28 @@ GET {{baseUrl}}/{{urlPath}}/signout
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/main
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+POST {{baseUrl}}/{{urlPath}}/createVideo
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "title": "trance strange",
+  "description": "This guy play some strange electronic music",
+  "link": "https://www.youtube.com/watch?v=PNZlhmVMXWo",
+  "category": "techno"
+}
+
+###
+GET {{baseUrl}}/{{urlPath}}/searchVideo/64769460fe2ef6ffc8968fe1
+Content-Type: application/json
+Accept: application/json
+withCredentials: true

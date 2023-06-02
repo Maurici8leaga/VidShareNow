@@ -23,7 +23,7 @@ export class AuthMiddleware {
       // en el se encontrara la data del user como el id, username, token y email
     } catch (error) {
       // si el token fue modificado y no coincide entonces
-      throw new NotAuthorizedError('Token not provided. Please login again');
+      throw new NotAuthorizedError('Token is invalid. Please login again');
     }
     next();
   }

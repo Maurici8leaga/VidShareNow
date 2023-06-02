@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import e, { Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { joiValidation } from '@decorators/joiValidation.decorators';
 import { commentScheme } from '@comment/schemes/comment';
 import { ICommentDocument } from '@comment/interfaces/commentDocument.interface';

@@ -18,12 +18,12 @@ class VideoService {
       { path: 'likes', select: 'username createdAt' }
     ])) as IVideoDocument;
 
-    // const user: IVideoDocument[] = await VideoSchema.aggregate([
+    // const user: IVideoDocument = (await VideoSchema.aggregate([
     //   { $match: { _id: new mongoose.Types.ObjectId(userId) } },
     //   { $lookup: { from: 'User', localField: 'author', foreignField: '_id', as: 'author' } },
     //   { $unwind: 'author' },
     //   { $project: this.aggregateData() }
-    // ]);
+    // ])) as unknown as IVideoDocument;
 
     return user;
   }
