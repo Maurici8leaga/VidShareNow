@@ -3,6 +3,7 @@ import { config } from '@configs/configEnv';
 import { userRoutes } from '@user/routes/userRoutes';
 import { authMiddleware } from '@helpers/middlewares/auth-middleware';
 import { videoRoutes } from '@video/routes/videoRoutes';
+import { commentRoutes } from '@comment/routes/commentRoutes';
 
 // funcion anonima que contendra las rutas princiapales a exposicion
 export default (app: Application) => {
@@ -22,6 +23,9 @@ export default (app: Application) => {
 
     // ruta padre para los videos
     app.use(config.BASE_PATH!, authMiddleware.verifyUserToken, videoRoutes.routes());
+
+    // ruta padre para los comentarios
+    app.use(config.BASE_PATH!, authMiddleware.verifyUserToken, commentRoutes.routes());
   };
 
   routes();

@@ -54,7 +54,7 @@ export class Video extends VideoUtility {
     res.status(HTTP_STATUS.OK).json({ message: 'Successful request', videoArray: videoList });
   }
 
-  //  controlador para buscar un video por el userId
+  //  controlador para buscar un video por el authorId
   public async searchVideoByUserId(req: Request, res: Response): Promise<void> {
     const video: IVideoDocument = await videoService.getVideoByUserId(`${req.params.id}`);
 
@@ -64,6 +64,7 @@ export class Video extends VideoUtility {
 
     // verificar si esta respuesta los comentarios aparecen populados o no, y en tal caso si  hay que hacer un request
     // a la db para obtenere los comentarios en ella
+    // res.status(HTTP_STATUS.OK).json({ message: 'Successful request' });
     res.status(HTTP_STATUS.OK).json({ message: 'Successful request', video: video });
   }
 }

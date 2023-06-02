@@ -9,8 +9,8 @@ Accept: application/json
 withCredentials: true
 
 {
-  "username": "mau8795",
-  "email": "mauricio@gmail.com",
+  "username": "leo0406",
+  "email": "leo@gmail.com",
   "password": "123456"
 }
 
@@ -44,14 +44,24 @@ Accept: application/json
 withCredentials: true
 
 {
-  "title": "trance strange",
-  "description": "This guy play some strange electronic music",
-  "link": "https://www.youtube.com/watch?v=PNZlhmVMXWo",
-  "category": "techno"
+  "title": "Best Progressive House",
+  "description": "The best music for coding",
+  "link": "https://www.youtube.com/watch?v=DzfyleInDKg",
+  "category": "House techno"
 }
 
 ###
-GET {{baseUrl}}/{{urlPath}}/searchVideo/64769460fe2ef6ffc8968fe1
+GET {{baseUrl}}/{{urlPath}}/searchVideo/647a0c4683330a54146688b0
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
+
+###
+POST {{baseUrl}}/{{urlPath}}/video/647a0c9d83330a54146688b6/createComment
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "text": "Bueeenaaa!"
+}

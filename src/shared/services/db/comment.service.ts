@@ -4,9 +4,11 @@ import { CommentSchema } from '@comment/models/comment.schema';
 //aqui se implementa principio SOLID open / close y single  responsability, ya que las funcionales de esta clase pueden expanderse en variedad
 class CommentService {
   // funcion asincrona para crear un comentario, es asincrona ya que los metodo de mongoose son asincronos
-  public async createComment(data: ICommentDocument): Promise<void> {
-    await CommentSchema.create(data);
+  public async createComment(data: ICommentDocument): Promise<ICommentDocument> {
+    const comment: ICommentDocument = await CommentSchema.create(data);
     // el metodo "create" es de mongoose,  el permite crear un documento en la DB
+
+    return comment;
   }
 
   // find comment
