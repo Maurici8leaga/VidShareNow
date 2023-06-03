@@ -7,6 +7,8 @@ import { IVideoDocument } from '@video/interfaces/videoDocument.interface';
 import { IUserDocument } from '@user/interfaces/userDocument.interface';
 import { userService } from '@root/shared/services/db/user.service';
 import { videoService } from '@root/shared/services/db/video.service';
+import { commentService } from '@root/shared/services/db/comment.service';
+import { ICommentDocument } from '@comment/interfaces/commentDocument.interface';
 import { VideoUtility } from './utilities/video.utility';
 import HTTP_STATUS from 'http-status-codes';
 
@@ -58,6 +60,10 @@ export class Video extends VideoUtility {
   public async searchVideoByUserId(req: Request, res: Response): Promise<void> {
     const video: IVideoDocument = await videoService.getVideoByUserId(`${req.params.id}`);
 
+    // implemntar aca buscador de comentario  por  videoId
+    const comments: ICommentDocument[] = await commentService.searchCommentByVideoId(`${video._id}`);
+    // OJO COMO ESTA VARIABLE DEVOLVERA UN ARRAY DE COMENTARIOS SE DEBE COLOCAR EL [] EN EL TIPO DE LA VARIABLE
+
     if (!video) {
       res.status(HTTP_STATUS.NOT_FOUND).json({ message: 'Video not found' });
     }
@@ -65,6 +71,6 @@ export class Video extends VideoUtility {
     // verificar si esta respuesta los comentarios aparecen populados o no, y en tal caso si  hay que hacer un request
     // a la db para obtenere los comentarios en ella
     // res.status(HTTP_STATUS.OK).json({ message: 'Successful request' });
-    res.status(HTTP_STATUS.OK).json({ message: 'Successful request', video: video });
+    res.status(HTTP_STATUS.OK).json({ message: 'Successful request', video: video, comments: comments });
   }
 }

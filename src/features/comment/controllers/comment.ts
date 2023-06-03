@@ -10,6 +10,7 @@ import { userService } from '@root/shared/services/db/user.service';
 import { videoService } from '@root/shared/services/db/video.service';
 import { CommentUtility } from './utilities/comment.utility';
 import HTTP_STATUS from 'http-status-codes';
+import { NotAuthorizedError } from '@helpers/errors/notAuthorizedError';
 
 export class Comment extends CommentUtility {
   @joiValidation(commentScheme)
@@ -49,22 +50,26 @@ export class Comment extends CommentUtility {
     const actualUser: IUserDocument = await userService.getUserByUsername(`${req.currentUser?.username}`);
 
     // buscar el comentario el cual se quiere actualizar
-    const currentComment: ICommentDocument = await commentService.searchCommentById(`${req.params.commentId}`);
+    const comment: ICommentDocument = await commentService.searchCommentById(`${req.params.commentId}`);
 
-    if (!currentComment) {
+    if (!comment) {
       res.status(HTTP_STATUS.NOT_FOUND).json({ message: 'The comment does not exist' });
     }
 
+    const idUser = new ObjectId(actualUser._id);
+    const idAuthorComment = new ObjectId(comment.idAuthor._id);
+
     // Si se puede usar estos 2 if ya que son para 2 casos distintos
-    if (actualUser._id !== currentComment.idAuthor._id) {
-      // si el usuario actual no  coincide con el  que creo el comentario entoces no podra realizar la accion
-      res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: 'User not authorized' });
+    if (idUser.equals(idAuthorComment)) {
+      await commentService.editComment(`${req.params.commentId}`, text);
+
+      const commentUpdated: ICommentDocument = await commentService.searchCommentById(`${req.params.commentId}`);
+      // OJO SIEMPRE SE DEBE TIPAR EN ENTRADAS Y SALIDAS DE FUNCIONES QUE DEVUELVAN DATA ES BUENA PRACTICA
+
+      res.status(HTTP_STATUS.CREATED).json({ message: 'Comment update successfully', comment: commentUpdated });
+    } else {
+      throw new NotAuthorizedError('User not authorized');
     }
-
-    // OJO SIEMPRE SE DEBE TIPAR EN ENTRADAS Y SALIDAS DE FUNCIONES QUE DEVUELVAN DATA ES BUENA PRACTICA
-    const commetUpdated: ICommentDocument = await commentService.editComment(`${currentComment.idAuthor._id}`, text);
-
-    res.status(HTTP_STATUS.CREATED).json({ message: 'Comment update successfully', comment: commetUpdated });
   }
 
   // controlador para  eliminar un comentario
@@ -79,13 +84,15 @@ export class Comment extends CommentUtility {
     // buscar el usuario actual en la session
     const actualUser: IUserDocument = await userService.getUserByUsername(`${req.currentUser?.username}`);
 
-    if (actualUser._id !== currentComment.idAuthor._id) {
+    const idUser = new ObjectId(actualUser._id);
+    const idAuthorComment = new ObjectId(currentComment.idAuthor._id);
+
+    if (idUser.equals(idAuthorComment)) {
       // si el usuario actual no  coincide con el  que creo el comentario entoces no podra realizar la accion
-      res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: 'User not authorized' });
+      await commentService.deleteComment(`${currentComment._id}`);
+      res.status(HTTP_STATUS.OK).json({ message: 'Comment deleted successfully' });
+    } else {
+      throw new NotAuthorizedError('User not authorized');
     }
-
-    await commentService.deleteComment(`${currentComment._id}`);
-
-    res.status(HTTP_STATUS.OK).json({ message: 'Comment deleted successfully' });
   }
 }

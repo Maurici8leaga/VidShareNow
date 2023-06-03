@@ -51,17 +51,33 @@ withCredentials: true
 }
 
 ###
-GET {{baseUrl}}/{{urlPath}}/searchVideo/647a0c4683330a54146688b0
+GET {{baseUrl}}/{{urlPath}}/searchVideo/64769460fe2ef6ffc8968fe1
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
 
 ###
-POST {{baseUrl}}/{{urlPath}}/video/647a0c9d83330a54146688b6/createComment
+POST {{baseUrl}}/{{urlPath}}/video/6478e9a1c92c38f282c18f97/createComment
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
 
 {
-  "text": "Bueeenaaa!"
+  "text": "Too much, esa vaina es muy extraña"
 }
+
+###
+PUT {{baseUrl}}/{{urlPath}}/editComment/647a2df49677aabbdca47406
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "text": ""
+}
+
+###
+DELETE {{baseUrl}}/{{urlPath}}/deleteComment/647a950edfd12b3a7e5ff1da
+Content-Type: application/json
+Accept: application/json
+withCredentials: true

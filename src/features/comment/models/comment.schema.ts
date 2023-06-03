@@ -10,7 +10,7 @@ const commentSchema: Schema = new Schema({
   // DATO YA QUE ESTA EN TYPESCRIPT NO SE COLOCA EL PARAMETRO REQUIRED PORQUE ESTA DEFINIDO EN LA INTERFAZ IVideoDocument
 
   idVideo: { type: mongoose.Schema.Types.ObjectId, ref: 'Video' }, //aqui se une el valor de este arg con el de un schema Video
-  idAuthor: { type: mongoose.Schema.Types.ObjectId, red: 'User' }, //aqui se une el valor de este arg con el de un schema User
+  idAuthor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, //aqui se une el valor de este arg con el de un schema User
   text: { type: String, default: '' }, //es buena practica colocar sus valores por default
   createdAt: { type: Date, default: Date.now() }
 });
