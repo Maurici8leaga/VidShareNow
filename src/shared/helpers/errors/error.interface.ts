@@ -1,6 +1,4 @@
-// DATO cuando se coloca la I primero seguido del nombre en una interfaz es para hacer saber que es de una interfaz
-
-// se crea una interfaz para asi definir la estructura que tendra los metodos errors que la hereden
+// In this file was implemented Principle SOLID Interface Segregation
 export interface IError {
   message: string;
   statusCode: number;

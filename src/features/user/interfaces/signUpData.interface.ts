@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 
-// (SOLID Interface Segregation)
+// In this file was implemented Principle SOLID Interface Segregation
 export interface ISignUpData {
   _id: ObjectId;
   username: string;

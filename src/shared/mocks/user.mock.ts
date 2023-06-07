@@ -7,23 +7,20 @@ export const authMockRequest = (
   currentUser?: AuthPayload | null,
   params?: unknown
 ) => ({
-  session: sessionData, //se necesita el token de la session
+  session: sessionData,
   body,
   currentUser,
-  params //el params es de tipo "unknown" porque puede existir muchos tipos de parametros
+  params
 });
 
 export const authMockResponse = (): Response => {
   const res: Response = {} as Response;
-  res.status = jest.fn().mockReturnValue(res); // simular el código de status
-  // fn de jest crea un mock de una funcion
-  res.json = jest.fn().mockReturnValue(res); // simularemos los datos con los retorne el json
-  // mockReturnValue acepta un valor el cual sera retornado cuando el mock function es llamado
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
   return res;
 };
 
 export interface IJWT {
-  // estructura con el token de la sesión
   token?: string;
 }
 

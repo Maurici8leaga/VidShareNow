@@ -4,36 +4,26 @@ import { Signup } from '../signup';
 import { CustomError } from '@helpers/errors/customError';
 import { userService } from '@root/shared/services/db/user.service';
 
-jest.useFakeTimers(); // es un observador que controla procesos y tiempos de ejecucion
-jest.mock('@root/shared/services/db/user.service'); //simula un modulo que se encuentren en cierto directorio con sus caracteristicas en este caso el file que se  le  pasa en la ruta
-// OJO DEBE IR PARA QUE SEPA LOS PROCESOS DE LA DB
+// In this file was implemented the Patern GIVEN WHEN THEN
 
-// "describe" es el titulo del test, de lo que vas a testear, el 1er parametro sera el nombre, el 2do es va ser un callback
+jest.useFakeTimers();
+jest.mock('@root/shared/services/db/user.service');
+
 describe('SignUp', () => {
   beforeEach(() => {
-    // el beforeEach es para  ejecutar funciones antes de arrancar cada test, en este caso para limpiar los test anteriores
     jest.resetAllMocks();
-    // resettAllMocks , borra otros test que se hallan ejecutado antes, para que no se ejecuten otros test y no cree otros mocks aparte del que estas ejecutando
-    // SIEMPRE SE DEBE LIMPIAR LOS MOCKS
   });
 
   afterEach(() => {
-    // el "afterEach" es para ejecuciones que se realizan una vez que se ha resuelto el test
-    jest.clearAllMocks(); //despues de cada ejecucion de test este ayuda a limpiar los datos ocupados de otros mocks
-    jest.clearAllTimers(); //Limpia los procesos de escucha de los observadores de ejecucion
+    jest.clearAllMocks();
+    jest.clearAllTimers();
   });
 
   // UNITART TEST
   it('it should throw a error if the password is not provided', async () => {
-    // el "it" describes que es lo que se va a testear y como se va a hacer, su 1er  parametro es el nombre del test, el 2do
-    // sera un callback el cual sera el test
-
     // GIVEN STEP
     const req: Request = authMockRequest(
-      //este "authMockRequest" es una abstraccion de codigo que viene de auth.mocks donde en el
-      // se especificaron los parametros con sus valores, de esta forma se implementa el patron de diseño
-
-      {}, //el token es un json por ende es un objeto vacio que se coloca
+      {},
       {
         username: 'lulu3434',
         email: 'lulu@gmail.com',
@@ -41,23 +31,18 @@ describe('SignUp', () => {
       }
     ) as Request;
 
-    const res: Response = authMockResponse(); //este "authMockResponse" es una abstraccion de codigo que viene de auth.mocks donde en el
-    // se especificaron los parametros con sus valores, de esta forma se implementa el patron de diseño
+    const res: Response = authMockResponse();
 
     // WHEN STEP
     await Signup.prototype.create(req, res).catch((error: CustomError) => {
-      // el create es un promise por eso se usa "catch" ya que sabemos que retornara un error
-      // en el signup se debe prototypar igual para poder ser implementado
-
       // THEN STEP: ASSERT
 
-      // ya que en el signup se espera enviar un status y un mensaje (json) entonces se debe hacer..
-      expect(error.statuscode).toEqual(400); //se envia el status esperado
-      expect(error.serializeErrors().message).toEqual('Password is a required field'); //se envia el mensaje esperado, OJO DEBE SER EL MISMO SI NO DARA ERROR
+      expect(error.statuscode).toEqual(400);
+      expect(error.serializeErrors().message).toEqual('Password is a required field');
     });
   });
 
-  // INTEGRATION TEST2
+  // INTEGRATION TEST 2
   it('Should create user successfully', async () => {
     // GIVEN STEP
     const req: Request = authMockRequest(
@@ -73,21 +58,19 @@ describe('SignUp', () => {
 
     // WHEN STEP
 
-    jest.spyOn(userService, 'getUserByUsernameOrEmail').mockResolvedValue(null!); //se pasa null para simular que no existe en la DB
+    jest.spyOn(userService, 'getUserByUsernameOrEmail').mockResolvedValue(null!);
 
-    // se debe almacenar en una variable para que el valor que se almacene se pueda enviar
     const userSpy = jest.spyOn(userService, 'createUser');
 
     await Signup.prototype.create(req, res);
 
     // THEN STEP
-    expect(req.session?.token as IJWT).toBeDefined(); //"toBeDefined" es para asegurar que el valor de ua variable no sea undefined
-    expect(res.status).toHaveBeenCalledWith(201); // "toHaveBeenCalledWidth" es para asegurarse que los parametros de una funcion venga con todos sus valores
+    expect(req.session?.token as IJWT).toBeDefined();
+    expect(res.status).toHaveBeenCalledWith(201);
     console.log(userSpy.mock, 'esto es userSpy');
     expect(res.json).toHaveBeenCalledWith({
       message: 'User created successfully',
-      user: userSpy.mock.calls[0][0], //"calls"  Permite apuntar a argumentos de un mock generado OJO REVISAR PRIMERO EL LENGTH DEL CALLS
-      // OJO si se va a enviar data como en este caso mayormente se usa "mock.calls" + el numero del array que tenga
+      user: userSpy.mock.calls[0][0],
       token: req.session?.token
     });
   });
