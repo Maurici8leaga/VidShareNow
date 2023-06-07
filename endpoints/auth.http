@@ -9,8 +9,8 @@ Accept: application/json
 withCredentials: true
 
 {
-  "username": "lulu3434",
-  "email": "lulu@gmail.com",
+  "username": "jaimito",
+  "email": "jaimito@gmail.com",
   "password": "123456"
 }
 
@@ -21,7 +21,7 @@ Accept: application/json
 withCredentials: true
 
 {
-  "username": "mau8795",
+  "username": "jaimito",
   "password": "123456"
 }
 
@@ -44,9 +44,9 @@ Accept: application/json
 withCredentials: true
 
 {
-  "title": "Best Progressive House",
-  "description": "The best music for coding",
-  "link": "https://www.youtube.com/watch?v=DzfyleInDKg",
+  "title": "Einmusik b2b Jonas Saalbach live at Preikestolen in Norway for Cercle",
+  "description": "El mejor escenario ever",
+  "link": "https://www.youtube.com/watch?v=cVFzblT5VPE",
   "category": "House techno"
 }
 
@@ -57,27 +57,27 @@ Accept: application/json
 withCredentials: true
 
 ###
-POST {{baseUrl}}/{{urlPath}}/video/6478e9a1c92c38f282c18f97/createComment
+POST {{baseUrl}}/{{urlPath}}/video/64810e36d6c5858b9b5fe7d2/createComment
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
 
 {
-  "text": "Too much, esa vaina es muy extraña"
+  "text": "Que les  parece el video?"
 }
 
 ###
-PUT {{baseUrl}}/{{urlPath}}/editComment/647a2df49677aabbdca47406
+PUT {{baseUrl}}/{{urlPath}}/editComment/64810ea1d6c5858b9b5fe7de
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
 
 {
-  "text": ""
+  "text": "Que les parece"
 }
 
 ###
-DELETE {{baseUrl}}/{{urlPath}}/deleteComment/647a950edfd12b3a7e5ff1da
+DELETE {{baseUrl}}/{{urlPath}}/deleteComment/64810ea1d6c5858b9b5fe7de
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
