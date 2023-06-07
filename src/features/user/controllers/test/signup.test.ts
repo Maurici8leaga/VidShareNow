@@ -71,34 +71,12 @@ describe('SignUp', () => {
 
     const res: Response = authMockResponse();
 
-    // const { username, email, password } = req.body;
-
-    // const usernameFix = await Generators.firstLetterCapitalized(username);
-    // // const hashPassword = await Generators.hash(password);
-
-    // const userData = {
-    //   // _id:  new ObjectId(),
-    //   username: usernameFix,
-    //   email,
-    //   // password: hashPassword,
-    //   password,
-    //   createdAt: new Date()
-    // };
-
     // WHEN STEP
+
     jest.spyOn(userService, 'getUserByUsernameOrEmail').mockResolvedValue(null!); //se pasa null para simular que no existe en la DB
 
+    // se debe almacenar en una variable para que el valor que se almacene se pueda enviar
     const userSpy = jest.spyOn(userService, 'createUser');
-    // jest.spyOn(userService, 'createUser'); <- ANTES
-
-    // const userData = jest.spyOn(userService, 'createUser');
-
-    // const user = {
-    //   _id: '64769460fe2ef6ffc89123df',
-    //   username: req.body.username,
-    //   email: req.body.email,
-    //   password: req.body.password
-    // };
 
     await Signup.prototype.create(req, res);
 
@@ -109,7 +87,7 @@ describe('SignUp', () => {
     expect(res.json).toHaveBeenCalledWith({
       message: 'User created successfully',
       user: userSpy.mock.calls[0][0], //"calls"  Permite apuntar a argumentos de un mock generado OJO REVISAR PRIMERO EL LENGTH DEL CALLS
-      // user: userSpy.mock.calls[0][0],
+      // OJO si se va a enviar data como en este caso mayormente se usa "mock.calls" + el numero del array que tenga
       token: req.session?.token
     });
   });
