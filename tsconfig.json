@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "lib": ["DOM", "ES2015"],
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "target": "ES2015",
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strict": true,
+    "baseUrl": "./",
+    "outDir": "./build",
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "pretty": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "plugins": [
+      { "transform": "typescript-transform-paths" },
+      { "transform": "typescript-transform-paths", "afterDeclarations": true }
+    ],
+    "paths": {
+      "@bootstrap/*": ["src/bootstrap/*"],
+      "@configs/*": ["src/configs/*"],
+      "@user/*": ["src/features/user/*"],
+      "@video/*": ["src/features/video/*"],
+      "@comment/*": ["src/features/comment/*"],
+      "@interfaces/*": ["src/interfaces/*"],
+      "@decorators/*": ["src/shared/decorators/*"],
+      "@helpers/*": ["src/shared/helpers/*"],
+      "@root/*": ["src/*"]
+    }
+  },
+  "exclude": ["node_modules"],
+  "include": ["src/**/*.ts"]
+}

@@ -1,0 +1,83 @@
+@baseUrl = http://localhost:5001
+
+@urlPath = api/v1
+
+###
+POST {{baseUrl}}/{{urlPath}}/signup
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "username": "jaimito",
+  "email": "jaimito@gmail.com",
+  "password": "123456"
+}
+
+###
+POST {{baseUrl}}/{{urlPath}}/signin
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "username": "jaimito",
+  "password": "123456"
+}
+
+###
+GET {{baseUrl}}/{{urlPath}}/signout
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/main
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+POST {{baseUrl}}/{{urlPath}}/createVideo
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "title": "Einmusik b2b Jonas Saalbach live at Preikestolen in Norway for Cercle",
+  "description": "El mejor escenario ever",
+  "link": "https://www.youtube.com/watch?v=cVFzblT5VPE",
+  "category": "House techno"
+}
+
+###
+GET {{baseUrl}}/{{urlPath}}/searchVideo/64769460fe2ef6ffc8968fe1
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+POST {{baseUrl}}/{{urlPath}}/video/64810e36d6c5858b9b5fe7d2/createComment
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "text": "Que les  parece el video?"
+}
+
+###
+PUT {{baseUrl}}/{{urlPath}}/editComment/64810ea1d6c5858b9b5fe7de
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "text": "Que les parece"
+}
+
+###
+DELETE {{baseUrl}}/{{urlPath}}/deleteComment/64810ea1d6c5858b9b5fe7de
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
