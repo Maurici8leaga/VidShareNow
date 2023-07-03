@@ -12,12 +12,13 @@ class Config {
   public SALT_ROUND: string | undefined;
   public JWT_TOKEN: string | undefined;
   public BASE_PATH: string | undefined;
+  public MONGO_URI: undefined;
 
   constructor() {
     this.NODE_ENV = process.env.NODE_ENV;
     this.CLIENT_URL = process.env.CLIENT_URL;
     this.SERVER_PORT = process.env.SERVER_PORT;
-    this.DATABASE_URL = process.env.DATABASE_URL;
+    this.DATABASE_URL = process.env.MONGO_URI || process.env.DATABASE_URL;
     this.SECRET_KEY_ONE = process.env.SECRET_KEY_ONE;
     this.SECRET_KEY_TWO = process.env.SECRET_KEY_TWO;
     this.SALT_ROUND = process.env.SALT_ROUND;
